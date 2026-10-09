@@ -7,18 +7,25 @@ import { Draggable } from 'gsap/Draggable';
 import { projects } from "../constants";
 import Navbar from "./components/Navbar";
 import Image from "next/image";
+import DragItem from './components/DragItem';
 export default function Home() {
 
   gsap.registerPlugin(Draggable);
   const containerRef = useRef(null);
+  
 
   useGSAP(() => {
     Draggable.create('.target', {
       type: 'x,y',                  // Allows dragging both horizontally and vertically
       bounds: containerRef.current, // Keeps the box contained inside the parent container
       inertia: false,               // Set to true if using the premium InertiaPlugin
-      onDragStart: () => console.log('Drag started!'),
-      onDragEnd: () => console.log('Drag ended!'),
+      onDragEnd: function() {
+        if (this.hitTest('.drop-zone', '50%')) {
+          console.log('Drag dropped in zone!')
+          // pass in data from targeted object
+
+        } else console.log('not in zone!')
+      },
     });
   }, { scope: containerRef });
 
@@ -30,6 +37,12 @@ export default function Home() {
       </div>
       <div className="target w-fit h-30">
         <img src={projects[1].imgPath} alt="" className="spin h-full" />
+      </div>
+      <div className="drop-zone w-80 h-80 bg-amber-600">
+        dropZoneRef
+      </div>
+      <div className="drop-zone-details">
+        drop zone dynamic details
       </div>
       < Navbar />
     </main>
