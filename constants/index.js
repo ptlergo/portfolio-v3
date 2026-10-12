@@ -48,9 +48,15 @@ const socials = [
  },
 ];
 
+const test =  [
+    { id: 'item-1', name: 'Iron Shield', weight: 15, rarity: 'Common' },
+    { id: 'item-2', name: 'Phoenix Feather', weight: 1, rarity: 'Epic' },
+    { id: 'item-3', name: 'Shadow Blade', weight: 6, rarity: 'Legendary' },
+  ]
 
 export {
  navLinks,
  projects,
  socials,
+ test
 };
