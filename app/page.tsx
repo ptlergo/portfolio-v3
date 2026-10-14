@@ -6,7 +6,8 @@ import gsap from "gsap";
 import { Draggable } from 'gsap/Draggable';
 import { test } from "../constants";
 import Navbar from "./components/Navbar";
- 
+import Link from 'next/link';
+
 
 export default function Home() {
 
@@ -23,22 +24,22 @@ export default function Home() {
 
     const draggableTargets = gsap.utils.toArray<HTMLElement>('.draggable-item');
     const dropZone = dropZoneRef.current;
-    
+
     if (!dropZone) return;
 
     Draggable.create(draggableTargets, {
       bounds: containerRef.current,
       inertia: true,
-      
+
       // Fires continuously as the item moves
-      onDrag: function() {
+      onDrag: function () {
         if (this.hitTest(dropZone, "50%")) {
           // Extract the unique ID from the DOM dataset
           const itemId = this.target.getAttribute('data-id');
-          
+
           // Find the rich React properties matching that ID
           const matchedComponent = items.find((i) => i.id === itemId);
-          
+
           if (matchedComponent) {
             console.log("Live dragging properties over zone:", matchedComponent);
           }
@@ -66,41 +67,46 @@ export default function Home() {
 
   return (
     <>
-    <div ref={containerRef} className="relative w-full h-[500px] bg-slate-900 p-8 flex gap-8">
-      
-      {/* Draggable Components */}
-      <div className="flex flex-col gap-4 w-1/3">
-        {items.map((item) => (
-          <div
-            key={item.id}
-            data-id={item.id} // 3. The bridge between the DOM and React State
-            className="draggable-item p-4 bg-slate-700 text-white rounded-lg shadow-md cursor-grab active:cursor-grabbing border border-slate-600"
-          >
-            {item.name}
-          </div>
-        ))}
-      </div>
+      <div ref={containerRef} className="relative w-full p-8 flex gap-8">
 
-      {/* The Target Drop Zone */}
-      <div className="flex-1 flex flex-col gap-4">
-        <div 
-          ref={dropZoneRef} 
-          className="drop-zone h-64 border-4 border-dashed border-slate-500 rounded-2xl flex items-center justify-center bg-slate-800 text-slate-400"
-        >
-          {activeItemProps ? `Zone occupied by: ${activeItemProps.name}` : 'Drop an item here'}
+        {/* Draggable Components */}
+        <div className="flex flex-col gap-4 w-1/3">
+          {items.map((item) => (
+            <div
+              key={item.id}
+              data-id={item.id} // 3. The bridge between the DOM and React State
+              className="draggable-item p-4 bg-slate-700 text-white rounded-lg shadow-md cursor-grab active:cursor-grabbing border border-slate-600"
+            >
+              <img src={item.imgPath} alt={item.name} className="mt-2 w-full h-auto" />
+            </div>
+          ))}
         </div>
 
+        {/* The Target Drop Zone */}
+        <div className="flex-1 flex flex-col gap-4">
+          <div
+            ref={dropZoneRef}
+            className="drop-zone h-64 border-4 border-dashed border-slate-500 rounded-2xl flex items-center justify-center text-slate-400"
+          >
+            {activeItemProps ? `Zone occupied by: ${activeItemProps.name}` : 'Drop an item here'}
+          </div>
+
+
+        </div>
         {/* 4. Displaying the Component Properties in Next.js UI */}
         {activeItemProps && (
-          <div className="p-4 bg-slate-800 text-slate-200 border border-slate-700 rounded-lg">
-            <h3 className="font-bold text-lg text-emerald-400">Component Properties:</h3>
-            <pre className="mt-2 text-sm bg-slate-950 p-3 rounded font-mono">
-              {JSON.stringify(activeItemProps, null, 2)}
+          <div className="p-4">
+            <h3 className="font-bold text-lg">Details</h3>
+            <pre className="mt-2 text-sm  p-3 rounded font-mono">
+              {/* {JSON.stringify(activeItemProps, null, 2)} */}
+              <p>
+                {activeItemProps.details}
+              </p>
+              <Link href={activeItemProps.linkPath}>Learn more</Link>
             </pre>
           </div>
         )}
       </div>
-    </div>
-    </>
+    </> 
   );
 }

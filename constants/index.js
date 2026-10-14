@@ -49,9 +49,9 @@ const socials = [
 ];
 
 const test =  [
-    { id: 'item-1', name: 'Iron Shield', weight: 15, rarity: 'Common' },
-    { id: 'item-2', name: 'Phoenix Feather', weight: 1, rarity: 'Epic' },
-    { id: 'item-3', name: 'Shadow Blade', weight: 6, rarity: 'Legendary' },
+    { id: 'item-4', name: 'Musicem', details:'musicem details', weight: 0, rarity: 'Common', imgPath: "/imgs/home/musicem.png", linkPath: '/musicem' },
+    { id: 'item-5', name: 'Winter Soulstice', details:'wintersoulstice details', weight: 0, rarity: 'Common', imgPath: "/imgs/home/wintersoulstice.png", linkPath: '/wintersoulstice' },
+    { id: 'item-6', name: 'Loner Tour', details:'lonertour details', weight: 0, rarity: 'Common', imgPath: "/imgs/home/lonertour.png", linkPath: '/lonertour' }
   ]
 
 export {
